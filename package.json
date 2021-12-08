@@ -1,0 +1,16 @@
+{
+  "name": "daynimal_backend",
+  "version": "1.0.0",
+  "description": "Server for daynimal app",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "author": "Ivan Santa",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1"
+  }
+}
