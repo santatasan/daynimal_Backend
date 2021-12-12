@@ -2,13 +2,31 @@ const router = require('express').Router();
 const bcrypt = require('bcryptjs');
 
 const { checkToken } = require('../../middlewares/checktoken');
-const { create, getByEmail, getById } = require('../../models/users.model');
+const { create, getByEmail, getById, update } = require('../../models/users.model');
 const { createToken } = require('../../utils');
 
 
-router.get('/profile', checkToken, async (req, res) => {
+router.get('/', checkToken, async (req, res) => {
     try {
         res.json(await getById(req.user));
+    } catch (err) {
+        res.status(401).json({ error: err.message });
+    }
+});
+
+router.put('/', checkToken, async (req, res) => {
+    try {
+        if (!req.body.check_pass) {
+            await update({ username: req.body.username, password: req.body.password, id: req.user });
+            res.json({ updated: true });
+        } else {
+            const user = await getById(req.user);
+            bcrypt.compareSync(req.body.last_password, user.password) ? (
+                req.body.password = bcrypt.hashSync(req.body.password),
+                await update({ username: req.body.username, password: req.body.password, id: req.user }),
+                res.json({ updated: true })
+            ) : res.status(401).json({ error: 'Email and/or password are wrong' });
+        };
     } catch (err) {
         res.status(401).json({ error: err.message });
     }

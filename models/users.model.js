@@ -6,4 +6,6 @@ const getByEmail = (email) => executeQueryOne('select * from users where email =
 
 const getById = (userId) => executeQueryOne('select * from users where id = ?', [userId]);
 
-module.exports = { create, getByEmail, getById };
+const update = ({ username, password, id }) => executeQueryOne('update users set username= ?, password= ? where id = ?', [username, password, id]);
+
+module.exports = { create, getByEmail, getById, update };
