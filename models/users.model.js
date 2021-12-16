@@ -8,4 +8,6 @@ const getById = (userId) => executeQueryOne('select * from users where id = ?', 
 
 const update = ({ username, password, id }) => executeQueryOne('update users set username= ?, password= ? where id = ?', [username, password, id]);
 
-module.exports = { create, getByEmail, getById, update };
+const delUser = (userId) => executeQuery('delete from users where id= ?', [userId]);
+
+module.exports = { create, getByEmail, getById, update, delUser };

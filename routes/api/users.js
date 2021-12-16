@@ -2,7 +2,8 @@ const router = require('express').Router();
 const bcrypt = require('bcryptjs');
 
 const { checkToken } = require('../../middlewares/checktoken');
-const { create, getByEmail, getById, update } = require('../../models/users.model');
+const { delAllAnimals } = require('../../models/animals.model');
+const { create, getByEmail, getById, update, delUser } = require('../../models/users.model');
 const { createToken } = require('../../utils');
 
 
@@ -50,6 +51,15 @@ router.post('/login', async (req, res) => {
 
         // do the passwords match?
         bcrypt.compareSync(req.body.password, user.password) ? res.json({ token: createToken(user) }) : res.status(401).json({ error: 'Email and/or password are wrong' });
+    } catch (err) {
+        res.status(401).json({ error: err.message });
+    }
+});
+
+router.delete('', checkToken, async (req, res) => {
+    try {
+        await delUser(req.user);
+        res.json(await delAllAnimals(req.user));
     } catch (err) {
         res.status(401).json({ error: err.message });
     }
