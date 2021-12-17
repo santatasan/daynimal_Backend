@@ -4,4 +4,6 @@ const getAllByType = ({ animalId, type }) => executeQuery('select * from cares w
 
 const create = ({ type, date, notes, place, fk_animal }) => executeQuery('insert into cares (type, date, notes, place, fk_animal) values (?,?,?,?,?)', [type, date, notes, place, fk_animal]);
 
-module.exports = { getAllByType, create };
+const update = ({ type, date, notes, place, id }) => executeQuery('update cares set type = ?, date = ?, notes = ?, place = ? where id = ?', [type, date, notes, place, id]);
+
+module.exports = { getAllByType, create, update };
