@@ -1,4 +1,5 @@
 const { create, getAll, checkAnimal, getById, update, delAnimal } = require('../../models/animals.model');
+const { delAllCaresByAnimal } = require('../../models/cares.model');
 
 const router = require('express').Router();
 
@@ -48,7 +49,8 @@ router.post('/', async (req, res) => {
 
 router.delete('/:animalId', async (req, res) => {
     try {
-        res.json(await delAnimal(req.params.animalId));
+        await delAnimal(req.params.animalId);
+        res.json(await delAllCaresByAnimal(req.params.animalId));
     } catch (err) {
         res.status(401).json({ error: err.message });
     }

@@ -1,4 +1,4 @@
-const { create, update } = require('../../models/cares.model');
+const { create, update, delCare } = require('../../models/cares.model');
 const { getAllByType } = require('../../models/cares.model');
 
 const router = require('express').Router();
@@ -21,7 +21,16 @@ router.put('', async (req, res) => {
 
 router.post('/:animalId', async (req, res) => {
     try {
-        res.json(await create({ ...req.body, fk_animal: req.params.animalId }));
+        res.json(await create({ ...req.body, fk_animal: req.params.animalId, fk_user: req.user }));
+    } catch (err) {
+        console.log(err.message)
+        res.status(401).json({ error: err.message });
+    }
+});
+
+router.delete('/:careId', async (req, res) => {
+    try {
+        res.json(await delCare(req.params.careId));
     } catch (err) {
         res.status(401).json({ error: err.message });
     }
