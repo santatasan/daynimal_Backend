@@ -5,6 +5,7 @@ const { checkToken } = require('../../middlewares/checktoken');
 const { delAllAnimals } = require('../../models/animals.model');
 const { delAllCaresByUser } = require('../../models/cares.model');
 const { delAllMedicationsByUser } = require('../../models/medications.model');
+const { delAllRemaindersByUser } = require('../../models/remainders.model');
 const { create, getByEmail, getById, update, delUser } = require('../../models/users.model');
 const { delAllVetVisitsByUser } = require('../../models/vetVisits.model');
 const { createToken } = require('../../utils');
@@ -65,6 +66,7 @@ router.delete('', checkToken, async (req, res) => {
         await delAllAnimals(req.user);
         await delAllVetVisitsByUser(req.user);
         await delAllMedicationsByUser(req.user);
+        await delAllRemaindersByUser(req.user);
         res.json(await delAllCaresByUser(req.user));
     } catch (err) {
         res.status(401).json({ error: err.message });
