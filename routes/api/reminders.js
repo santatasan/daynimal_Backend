@@ -38,7 +38,6 @@ router.post('/:animalId', async (req, res) => {
     try {
         res.json(await createReminder({ ...req.body, fk_animal: req.params.animalId, fk_user: req.user }));
     } catch (err) {
-        console.log(err.message)
         res.status(401).json({ error: err.message });
     }
 });

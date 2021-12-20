@@ -6,9 +6,9 @@ const getAllRemindersByType = (type, userId) => executeQuery('select * from remi
 
 const getAllReminders = (userId) => executeQuery('select * from reminders where fk_user = ? order by reminders.date asc', [userId]);
 
-const createReminder = ({ description, type, date, animal, fk_animal, fk_user }) => executeQuery('insert into reminders (description, type, date, animal, fk_animal, fk_user) values (?,?,?,?,?,?)', [description, type, date, animal, fk_animal, fk_user]);
+const createReminder = ({ description, type, start_date, reminder_date, animal, fk_animal, fk_user }) => executeQuery('insert into reminders (description, type, start_date, reminder_date, animal, fk_animal, fk_user) values (?,?,?,?,?,?,?)', [description, type, start_date, reminder_date, animal, fk_animal, fk_user]);
 
-const updateReminder = ({ description, type, date, animal, id }) => executeQuery('update reminders set description = ?, type = ?, date = ?, animal = ? where id = ?', [description, type, date, animal, id]);
+const updateReminder = ({ description, type, reminder_date, animal, id }) => executeQuery('update reminders set description = ?, type = ?, reminder_date = ?, animal = ? where id = ?', [description, type, reminder_date, animal, id]);
 
 const delReminder = (id) => executeQuery('delete from reminders where id= ?', [id]);
 
